@@ -42,8 +42,8 @@ class AuthController extends Controller
 
         if(!$user || !Hash::check($data['password'], $user->password)){
             return response([
-                'message'=>'Bad Creads'
-            ]);
+                'errors'=>['Bad Creads']
+            ], 422);
         }
 
         $token = $user->createToken('lvvueapp')->plainTextToken;
@@ -54,7 +54,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request){
+    public function logout(){
 
         auth()->user()->currentAccessToken()->delete(); 
         
